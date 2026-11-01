@@ -1,34 +1,62 @@
-#telegram-ai-assistant.json  
+# Telegram AI Personal Assistant using n8n
 
-This repository contains a production-ready **n8n AI workflow** designed to act as an automated personal assistant via Telegram. It leverages an advanced AI Agent powered by OpenAI, complete with memory retention and tools for productivity, task tracking, and sheet updates.
+An AI-powered personal assistant built using n8n, Telegram, and OpenAI. This project demonstrates how AI Agents and workflow automation can help manage everyday productivity tasks through a Telegram chatbot.
 
-## 📊 Workflow Blueprint
-Below is the structural layout of the automation setup:
+## Project Overview
 
-![n8n Workflow Map]![Telegram AI Assistant Workflow](screenshots/workflow-overview.png.jpg)
+The assistant uses an AI Agent to understand user messages and connect with productivity tools. The workflow includes memory and integrations for managing expenses, scheduling meetings, and creating tasks.
 
-### Core Features & Architecture:
-- **Telegram Trigger Node:** Acts as the primary interface receiving direct user inputs and queries via a Telegram Bot.
-- **AI Agent Node:** Built as the central brain utilizing `OpenAI Chat Model` nodes combined with a `Simple Memory` setup for contextual, multi-turn conversations.
-- **Integrated Tooling Nodes:**
-  - 📊 **Add Expense:** Automatically maps financial prompts directly into Google Sheets.
-  - 📅 **Scheduled Meeting:** Interprets dates/times to construct calendar invites.
-  - ✅ **Add Task:** Forwards task management items into target productivity platforms.
-- **Send Text Message Node:** Returns a dynamic, structured summary response to the originating Telegram chat window confirming the action's execution status.
+## Technologies Used
 
-## ⚙️ Requirements & Dependencies
-To run this configuration effectively, you will need active access keys and integrations for:
-- A self-hosted or cloud-hosted **n8n instance**
-- An **OpenAI API Key**
-- A **Telegram Bot API Token** (Obtained via BotFather)
-- Authentication scopes for Google Sheets, Google Calendar, or equivalent tool endpoints
+- n8n – Workflow Automation
+- OpenAI – AI Language Model
+- Telegram Bot API – Chat Interface
+- Google Sheets – Expense Management
+- Google Calendar – Meeting Scheduling
+- Simple Memory – Conversation Context
 
-## 🚀 How to Setup and Import
-1. Navigate to the `/workflows` directory in this repository and download the `personal-ai-assistant.json` file.
-2. Open your web-facing n8n dashboard interface.
-3. Select **Create New Workflow** or open a blank canvas.
-4. Click the top-right configuration menu button and choose **Import from File**.
-5. Upload the downloaded `.json` structure file.
-6. Click into the Telegram, OpenAI, and respective Google tool nodes to bind your local secure authentication credentials.
-7. Click **Save** and toggle the switch at the top right to **Active**.
+## Key Features
 
+- Telegram-based interaction
+- AI-powered message understanding
+- Context-aware conversations using memory
+- Expense entry through Google Sheets
+- Meeting scheduling through Google Calendar
+- Task management integration
+
+## Workflow Blueprint
+
+The following image shows the n8n workflow architecture:
+
+![Telegram AI Assistant Workflow](screenshots/workflow-overview.png.jpg)
+
+## Core Features and Architecture
+
+- **Telegram Trigger:** Receives user messages through a Telegram bot.
+- **AI Agent:** Processes user requests using the OpenAI Chat Model.
+- **Simple Memory:** Maintains conversation context.
+- **Add Expense:** Connects expense requests to Google Sheets.
+- **Scheduled Meeting:** Connects meeting requests to Google Calendar.
+- **Add Task:** Connects task requests to a task-management tool.
+- **Telegram Response:** Sends responses back to the user.
+
+## Requirements and Dependencies
+
+- n8n instance (self-hosted or cloud)
+- OpenAI API key
+- Telegram Bot API token
+- Google Sheets and Google Calendar credentials
+- Credentials for the configured task-management integration
+
+## How to Setup and Import
+
+1. Open the `workflows` folder in this repository.
+2. Download `telegram-ai-assistant.json`.
+3. Open your n8n dashboard.
+4. Create a new workflow.
+5. Select **Import from File**.
+6. Upload the downloaded JSON file.
+7. Configure your own Telegram, OpenAI, Google, and task-management credentials.
+8. Save and test the workflow.
+
+**Note:** This repository contains a workflow template. You must configure your own credentials and test each integration before using it.
