@@ -5,7 +5,7 @@ This repository contains a production-ready **n8n AI workflow** designed to act 
 ## 📊 Workflow Blueprint
 Below is the structural layout of the automation setup:
 
-![n8n Workflow Map](assets/workflow-screenshot.png)
+![n8n Workflow Map]![Telegram AI Assistant Workflow](screenshots/workflow-overview.png.jpg)
 
 ### Core Features & Architecture:
 - **Telegram Trigger Node:** Acts as the primary interface receiving direct user inputs and queries via a Telegram Bot.
