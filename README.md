@@ -47,6 +47,7 @@ The following image shows the n8n workflow architecture:
 - Telegram Bot API token
 - Google Sheets and Google Calendar credentials
 - Credentials for the configured task-management integration
+- - Google Tasks credentials
 
 ## How to Setup and Import
 
