@@ -1,0 +1,334 @@
+{
+  "name": "Personal AI Assistant Workflow using n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -336,
+        -112
+      ],
+      "id": "3cf23275-93f6-468a-8373-313166bcaeda",
+      "name": "Telegram Trigger",
+      "webhookId": "686b1bcb-95be-4661-9d38-5eab83def5aa",
+      "credentials": {
+        "telegramApi": {
+          "id": "qCtvNdzdpQyOQWEI",
+          "name": "MANISH BOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "you are a personal AI assistant.\nfollow the rules below:\n-after every successful action, just send a message to user  that \"your request is completed successfully\". Do not send any extra details in the send message node.\nuse \"add task\" tool to add tasks in google tasks. please set title based on user's message.\n-you are a personal AI assistant.\nfollow the rules below:\n-after every successful action, just send a message to user  that \"your request is completed successfully\". Do not send any extra details in the send message node.\nuse \"add task\" tool to add tasks based on user's message.\n--use \"schedule meeting\" tool for scheduling meetings in google calendar. Please fill the fields-start time, end time, attendees, descriptions and summary based on user's message if user's message does not have any of these values, then politely ask the user to provide these information. the time zone is iST.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -112,
+        -112
+      ],
+      "id": "79e79d85-69e0-4735-a506-0d8b0f5920c6",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {
+          "webSearch": {
+            "searchContextSize": "medium"
+          }
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -288,
+        112
+      ],
+      "id": "a5775973-703b-43b2-9e1e-0438796385fb",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "MANISH BOT"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -112,
+        112
+      ],
+      "id": "d27636d5-6458-48d4-8e73-aa3d07b90405",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        256,
+        -112
+      ],
+      "id": "c4d285b9-125d-4c2b-8a6f-847f125f6af2",
+      "name": "Send a text message",
+      "webhookId": "386c6268-51d2-4c6b-acf5-aafccd21538d",
+      "credentials": {
+        "telegramApi": {
+          "id": "qCtvNdzdpQyOQWEI",
+          "name": "MANISH BOT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "task": "MTE4NTUxODEzMDAwOTc5NTExOTU6MDow",
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.googleTasksTool",
+      "typeVersion": 1,
+      "position": [
+        432,
+        112
+      ],
+      "id": "349f6149-ed9b-4b42-9105-aab81a0eafde",
+      "name": "Add Task",
+      "credentials": {
+        "googleTasksOAuth2Api": {
+          "id": "aUnvqsEoq9ymsqqd",
+          "name": "Google Tasks account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "manishverma9419@gmail.com",
+          "mode": "list",
+          "cachedResultName": "manishverma9419@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "attendees": [
+            "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('attendees0_Attendees', ``, 'string') }}"
+          ],
+          "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        272,
+        144
+      ],
+      "id": "73005896-9923-4a81-ba2a-fbc39e237954",
+      "name": "Scheduled Meeting",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "2S7IgJhNFfdeIZQS",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1jZ6FT5cUy-81BeFc1TATstHDtQnOBJWzIvzbJQkQzbw",
+          "mode": "list",
+          "cachedResultName": "expense sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jZ6FT5cUy-81BeFc1TATstHDtQnOBJWzIvzbJQkQzbw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1jZ6FT5cUy-81BeFc1TATstHDtQnOBJWzIvzbJQkQzbw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "expense category": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('expense_category', ``, 'string') }}",
+            "date ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('date_', ``, 'string') }}",
+            "amount": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('amount', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "expense category",
+              "displayName": "expense category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date ",
+              "displayName": "date ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "amount",
+              "displayName": "amount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        48,
+        96
+      ],
+      "id": "3c9d7e0e-4016-4bd2-b8d9-ada207f8e5d5",
+      "name": "Add Expense",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3KssGjXRrnW4MS23",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Task": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scheduled Meeting": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Expense": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c96d2473-fa78-4f99-aac9-e3bfc9c932a2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4bd6e3dea10331a1ffc677530b08057e937417875a46ac8ae61948bd12140c24"
+  },
+  "nodeGroups": [],
+  "id": "yUwLnxM1jXJF5aKb",
+  "tags": []
+}
