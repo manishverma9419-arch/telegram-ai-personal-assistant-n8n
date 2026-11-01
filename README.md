@@ -1,4 +1,4 @@
-# n8n Personal AI Assistant Workflow
+#telegram-ai-assistant.json  
 
 This repository contains a production-ready **n8n AI workflow** designed to act as an automated personal assistant via Telegram. It leverages an advanced AI Agent powered by OpenAI, complete with memory retention and tools for productivity, task tracking, and sheet updates.
 
