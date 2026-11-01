@@ -58,5 +58,19 @@ The following image shows the n8n workflow architecture:
 6. Upload the downloaded JSON file.
 7. Configure your own Telegram, OpenAI, Google, and task-management credentials.
 8. Save and test the workflow.
+## Configuration Required
+
+Before running this workflow:
+
+1. Import the JSON file into n8n.
+2. Configure Telegram Bot credentials.
+3. Configure OpenAI API credentials.
+4. Configure Google Sheets credentials and Sheet ID.
+5. Configure Google Calendar credentials.
+6. Configure Google Tasks credentials and Task List ID.
+7. Test each tool before activating the workflow.
+
+Note: This repository contains a sanitized workflow template.
+No personal credentials or API keys are included.  
 
 **Note:** This repository contains a workflow template. You must configure your own credentials and test each integration before using it.
