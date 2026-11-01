@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../ai-workflow-automation-agent-n8n"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}
